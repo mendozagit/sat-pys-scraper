@@ -11,6 +11,32 @@ versión, aunque sí su incorporación en la rama principal de trabajo. Generalm
 
 ## Listado de cambios
 
+### Versión 4.0.1 2024-11-13
+
+Esta actualización confirma la compatibilidad (que ya existía) con PHP 8.4.
+
+Estos cambios aplican al proyecto liberado:
+
+- Cambios menores sugeridos por PHPStan (forzar escalares en lugar de usar anotaciones).
+- Se agrega la imagen en Docker Hub `phpcfdi/sat-pys-scraper`.
+- Se corrigen las insignias de SonarQube Cloud.
+- Se actualiza el año de licencia a 2025.
+
+Cambios en el entorno de desarrollo:
+
+- Se corrige la integración con SonarQube Cloud.
+- En el archivo de construcción de la imagen de Docker:
+  - Se construye usando PHP 8.4.
+  - Se eliminan las librerías de compilación.
+- En los flujos de trabajo:
+  - Se agrega PHP 8.4 a la matriz de pruebas.
+  - Se agrega PHP 8.4 a la matriz de pruebas de sistema.
+  - Se ejecutan los trabajos en PHP 8.4.
+  - Se agrega `composer-normalize` a los trabajos.
+- Se mejora la configuración de PHPUnit para mostrar todos los problemas encontrados.
+- Se actualiza el estándar de código.
+- Se actualizan las herramientas de desarrollo.
+
 ### Versión 4.0.0 2024-10-17
 
 Esta es una actualización de refactorización que obliga a crear una versión mayor.
