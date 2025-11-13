@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         defaultTestSuite="unit"
-         bootstrap="tests/bootstrap.php"
-         colors="true"
-         cacheDirectory="build/phpunit.cache"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    defaultTestSuite="unit"
+    cacheDirectory="build/phpunit"
+    bootstrap="tests/bootstrap.php"
+    colors="true"
+    displayDetailsOnAllIssues="true"
 >
-
-    <coverage/>
 
     <testsuites>
         <testsuite name="complete">
@@ -23,7 +22,7 @@
 
     <source>
         <include>
-            <directory suffix=".php">src</directory>
+            <directory>src</directory>
         </include>
     </source>
 

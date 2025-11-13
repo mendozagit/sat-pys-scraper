@@ -1,4 +1,4 @@
-FROM php:8.3-cli-alpine
+FROM php:8.4-cli-alpine
 
 COPY . /opt/sat-pys-scraper
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
@@ -6,7 +6,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 # install dependencies for php modules
 RUN set -e \
     && apk add git libzip-dev \
-    && docker-php-ext-install zip
+    && docker-php-ext-install zip \
+    && apk del libzip-dev
 
 # set up php
 RUN set -e \

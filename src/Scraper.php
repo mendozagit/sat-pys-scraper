@@ -115,6 +115,7 @@ final class Scraper implements ScraperInterface
     /** @return array<int|string, string> */
     private function extractSelectValues(Crawler $crawler, string $selectId): array
     {
+        /** @phpstan-var array{string, string} $options */
         $options = $crawler->filter("#$selectId option")->extract(['value', '_text']);
         $values = array_combine(
             array_column($options, 0),
@@ -123,11 +124,14 @@ final class Scraper implements ScraperInterface
         return array_filter($values, fn (int|string $key): bool => (bool) $key, ARRAY_FILTER_USE_KEY);
     }
 
-    /** @return array<int|string, scalar|null> */
+    /** @return array<scalar|null> */
     private function extractState(Crawler $crawler): array
     {
         $form = $crawler->filter('#form1')->form();
-        return $form->getPhpValues();
+        return array_filter(
+            $form->getPhpValues(),
+            static fn (mixed $value): bool => null === $value || is_scalar($value),
+        );
     }
 
     private function wrapGuzzleException(GuzzleException $exception): Exceptions\HttpException
@@ -135,13 +139,13 @@ final class Scraper implements ScraperInterface
         if ($exception instanceof ServerException) {
             return new Exceptions\HttpServerException(
                 message: $exception->getMessage(),
-                previous: $exception
+                previous: $exception,
             );
         }
 
         return new Exceptions\HttpException(
             message: $exception->getMessage(),
-            previous: $exception
+            previous: $exception,
         );
     }
 }

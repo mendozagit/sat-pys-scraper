@@ -7,6 +7,7 @@ namespace PhpCfdi\SatPysScraper\Tests\Unit;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use LogicException;
 use PhpCfdi\SatPysScraper\Scraper;
 use PhpCfdi\SatPysScraper\ScraperInterface;
@@ -71,7 +72,7 @@ abstract class TestCase extends \PhpCfdi\SatPysScraper\Tests\TestCase
         return new Scraper($client);
     }
 
-    /** @param array<mixed> $queue */
+    /** @param list<Response> $queue */
     public function createPreparedScraperQueue(array $queue): ScraperInterface
     {
         $mockHandler = new MockHandler($queue);
