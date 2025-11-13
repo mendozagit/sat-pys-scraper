@@ -127,7 +127,10 @@ final class Scraper implements ScraperInterface
     private function extractState(Crawler $crawler): array
     {
         $form = $crawler->filter('#form1')->form();
-        return $form->getPhpValues();
+        return array_filter(
+            $form->getPhpValues(),
+            static fn (mixed $value): bool => null === $value || is_scalar($value),
+        );
     }
 
     private function wrapGuzzleException(GuzzleException $exception): Exceptions\HttpException

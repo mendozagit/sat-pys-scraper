@@ -32,7 +32,10 @@ final readonly class PysSimulator
         }
         if ('POST' === $request->getMethod()) {
             parse_str($request->getBody()->__toString(), $values);
-            /** @phpstan-var array<string, scalar|null> $values */
+            $values = array_filter(
+                $values,
+                static fn (mixed $value): bool => is_scalar($value),
+            );
             $type = intval($values['cmbTipo'] ?? 0);
             $segment = intval($values['cmbSegmento'] ?? 0);
             $family = intval($values['cmbFamilia'] ?? 0);
