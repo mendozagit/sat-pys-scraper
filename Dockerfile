@@ -5,7 +5,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # install dependencies for php modules
 RUN set -e \
-    && apk add git libzip-dev \
+    && apk add git libzip libzip-dev \
     && docker-php-ext-install zip \
     && apk del libzip-dev
 
