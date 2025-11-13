@@ -11,6 +11,19 @@ versión, aunque sí su incorporación en la rama principal de trabajo. Generalm
 
 ## Listado de cambios
 
+### Versión 5.0.0 2025-11-13
+
+Se elimina la compatibilidad con PHP 8.2. Se mantiene PHP 8.3 y PHP 8.4.
+
+Si estás usando esta herramienta en una implementación de la librería, 
+esta versión no presenta cambios significativos a tu código.
+
+- Se establece el tipo `string` a la constante `Scraper::PYS_URL`.
+
+En el entorno de desarrollo:
+
+- Se actualiza PHPUnit a la versión 12.4.
+
 ### Versión 4.0.2 2025-11-13
 
 Se corrige la imagen de Docker incluyendo la dependencia `libzip`.
