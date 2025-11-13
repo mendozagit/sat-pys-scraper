@@ -23,7 +23,7 @@ final class ArgumentsBuilder
     {
         $arguments = array_values($arguments);
         while ([] !== $arguments) {
-            $argument = (string) array_shift($arguments);
+            $argument = array_shift($arguments);
             match (true) {
                 in_array($argument, ['--xml', '-x'], true) => $this->setXml((string) array_shift($arguments)),
                 in_array($argument, ['--json', '-j'], true) => $this->setJson((string) array_shift($arguments)),

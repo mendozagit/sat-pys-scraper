@@ -175,7 +175,8 @@ sin temor a romper tu aplicación.
 | 1.0.0   | 8.2, 8.3      | 2023-12-13 Fuera de mantenimiento |
 | 2.0.0   | 8.2, 8.3      | 2024-03-07 Fuera de mantenimiento |
 | 3.0.0   | 8.2, 8.3      | 2024-03-07 Fuera de mantenimiento |
-| 4.0.0   | 8.2, 8.3, 8.4 | 2024-10-17                        |
+| 4.0.0   | 8.2, 8.3, 8.4 | 2024-10-17 Fuera de mantenimiento |
+| 5.0.0   | 8.3, 8.4      | 2025-11-13                        |
 
 ## Contribuciones
 
