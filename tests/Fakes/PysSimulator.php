@@ -24,8 +24,7 @@ final readonly class PysSimulator
     {
     }
 
-    /** @param array<mixed> $options */
-    public function __invoke(RequestInterface $request, array $options): PromiseInterface
+    public function __invoke(RequestInterface $request): PromiseInterface
     {
         if ('GET' === $request->getMethod()) {
             return $this->promise($this->createTypes());
