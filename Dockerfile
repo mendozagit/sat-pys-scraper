@@ -1,4 +1,4 @@
-FROM php:8.3-cli-alpine
+FROM php:8.4-cli-alpine
 
 COPY . /opt/sat-pys-scraper
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
