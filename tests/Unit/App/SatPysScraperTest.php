@@ -63,7 +63,7 @@ final class SatPysScraperTest extends TestCase
         $this->assertStringContainsString(
             'ERROR: Did not specify --xml or --json arguments',
             $stdError,
-            'Expected error was not raised'
+            'Expected error was not raised',
         );
     }
 

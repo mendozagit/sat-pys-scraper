@@ -135,13 +135,13 @@ final class Scraper implements ScraperInterface
         if ($exception instanceof ServerException) {
             return new Exceptions\HttpServerException(
                 message: $exception->getMessage(),
-                previous: $exception
+                previous: $exception,
             );
         }
 
         return new Exceptions\HttpException(
             message: $exception->getMessage(),
-            previous: $exception
+            previous: $exception,
         );
     }
 }
