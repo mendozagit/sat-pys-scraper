@@ -10,6 +10,7 @@
 [![Code Coverage][badge-coverage]][coverage]
 [![Violations][badge-violations]][violations]
 [![Total Downloads][badge-downloads]][downloads]
+[![Docker Downloads][badge-docker]][docker]
 
 > Herramienta para obtener y generar un listado de las clasificaciones del catálogo de productos y servicios del SAT
 
@@ -38,22 +39,22 @@ propósitos, como por ejemplo, almacenar en una base de datos.
 composer require phpcfdi/sat-pys-scraper
 ```
 
-## Instalación usando Docker
+## Ejecución usando Docker
 
-Este proyecto provee un archivo `Dockerfile` para construir una imagen con todas sus dependencias. 
-Se puede usar esta imagen para correr de forma local, para más información consulte 
-el archivo [`README.Docker.md`](Docker.README.md).
+Este proyecto está integrado a Docker Hub [`phpcfdi/sat-pys-scraper`][docker] por lo que puedes ejecutarlo
+desde la línea de comandos:
 
 ```shell
-# clonado del proyecto
-git clone https://github.com/phpcfdi/sat-pys-scraper.git
-
-# construcción de la imagen de Docker
-docker build -t sat-pys-scraper sat-pys-scraper/
+# obtener la imagen de docker
+docker pull phpcfdi/sat-pys-scraper
 
 # ejecución de la herramienta
-docker run -it --rm sat-pys-scraper --help
+docker docker run -it --rm --user="$(id -u):$(id -g)" sat-pys-scraper --help
 ```
+
+Este proyecto provee un archivo `Dockerfile` para construir una imagen con todas sus dependencias.
+
+Para más información y ejemplos consulte el archivo [`README.Docker.md`](Docker.README.md).
 
 ### Ayuda de `sat-pys-scraper` (script)
 
@@ -200,6 +201,7 @@ and licensed for use under the MIT License (MIT). Please see [LICENSE][] for mor
 [coverage]: https://sonarcloud.io/component_measures?id=phpcfdi_sat-pys-scraper&metric=Coverage
 [violations]: https://sonarcloud.io/project/issues?id=phpcfdi_sat-pys-scraper&resolved=false
 [downloads]: https://packagist.org/packages/phpcfdi/sat-pys-scraper
+[docker]: https://hub.docker.com/r/phpcfdi/sat-pys-scraper
 
 [badge-source]: https://img.shields.io/badge/source-phpcfdi/sat--pys--scraper-blue?logo=github
 [badge-php-version]: https://img.shields.io/packagist/dependency-v/phpcfdi/sat-pys-scraper/php?logo=php
@@ -211,3 +213,4 @@ and licensed for use under the MIT License (MIT). Please see [LICENSE][] for mor
 [badge-coverage]: https://img.shields.io/sonar/coverage/phpcfdi_sat-pys-scraper/main?logo=sonarqubecloud&server=https%3A%2F%2Fsonarcloud.io
 [badge-violations]: https://img.shields.io/sonar/violations/phpcfdi_sat-pys-scraper/main?format=long&logo=sonarqubecloud&server=https%3A%2F%2Fsonarcloud.io
 [badge-downloads]: https://img.shields.io/packagist/dt/phpcfdi/sat-pys-scraper?logo=packagist
+[badge-docker]: https://img.shields.io/docker/pulls/phpcfdi/sat-pys-scraper?logo=docker
