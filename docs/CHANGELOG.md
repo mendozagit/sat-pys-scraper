@@ -11,11 +11,11 @@ versión, aunque sí su incorporación en la rama principal de trabajo. Generalm
 
 ## Listado de cambios
 
-### Versión 4.0.2 2024-11-13
+### Versión 4.0.2 2025-11-13
 
 Se corrige la imagen de Docker incluyendo la dependencia `libzip`.
 
-### Versión 4.0.1 2024-11-13
+### Versión 4.0.1 2025-11-13
 
 Esta actualización confirma la compatibilidad (que ya existía) con PHP 8.4.
 
