@@ -11,7 +11,7 @@ use PhpCfdi\SatPysScraper\Tests\TestCase;
 
 class ScraperTest extends TestCase
 {
-    private const MAX_RETRIES = 5;
+    private const int MAX_RETRIES = 5;
 
     public function testObtainSequence(): void
     {
