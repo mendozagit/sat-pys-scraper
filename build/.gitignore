@@ -1,2 +1,4 @@
 *
 !.gitignore
+!pys.xml
+!pys.json
