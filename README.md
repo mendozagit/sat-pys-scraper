@@ -26,7 +26,7 @@ El SAT en el sitio de internet <http://pys.sat.gob.mx/PyS/catPyS.aspx> tiene pub
 Esta clasificación no pertenece oficialmente a los catálogos y no se encuentra publicada en ningún lugar.
 
 Esta herramienta hace el *scrap* del sitio mencionado para obtener los 4 niveles de clasificación: Tipo, Segmento, Familia y Clase. 
-Igualmente, la estructura se puede exportar como XML o como JSON.
+Igualmente, la estructura se puede exportar como XML, como JSON, o como tablas referenciales normalizadas en JSON.
 
 ## Instalación usando composer
 
@@ -63,7 +63,7 @@ sat-pys-scraper - Crea un archivo con la clasificación de productos y servicios
 
 Sintaxis:
     sat-pys-scraper help|-h|--help
-    sat-pys-scraper [--quiet|-q] [--json|-j JSON_FILE] [--xml|-x XML_FILE]
+    sat-pys-scraper [--quiet|-q] [--json|-j JSON_FILE] [--xml|-x XML_FILE] [--normalized|-n DIRECTORY]
 
 Argumentos:
     --xml|-x XML_FILE
@@ -72,13 +72,16 @@ Argumentos:
     --json|-j JSON_FILE
         Establece el nombre de archivo, o "-" para la salida estándar, donde se envían
         los datos generados en formato JSON.
+    --normalized|-n DIRECTORY
+        Establece el directorio donde se escriben los archivos normalizados (tablas referenciales)
+        SatType.json, SatSegment.json, SatFamily.json y SatClass.json.
     --sort|-s SORT
         Establece el orden de elementos, default: key, se puede usar "key" o "name".
     --quiet|-q
         Modo de operación silencioso.
 
 Notas:
-    Debe especificar al menos un argumento "--xml" o "--json", o ambos.
+    Debe especificar al menos un argumento "--xml", "--json" o "--normalized".
     No se puede especificar "-" como salida de "--xml" y "--json" al mismo tiempo.
 
 Acerca de:
@@ -129,6 +132,36 @@ foreach ($types as $type) {
 
 $exporter = new XmlExporter();
 $exporter->export('output.xml', $types);
+```
+
+### Exportación normalizada (tablas referenciales)
+
+Con el argumento `--normalized DIRECTORY` (o usando la clase `NormalizedExporter`) la jerarquía se aplana
+en 4 tablas relacionales en formato JSON, donde cada elemento contiene el identificador de su padre:
+
+- `SatType.json`: `{ "Id", "Description" }`
+- `SatSegment.json`: `{ "Id", "Description", "TypeId" }`
+- `SatFamily.json`: `{ "Id", "Description", "SegmentId" }`
+- `SatClass.json`: `{ "Id", "Description", "FamilyId" }`
+
+Cada archivo contiene un envoltorio con la descripción del catálogo y la estrategia de búsqueda sugerida
+según la cantidad de elementos (`InMemory` hasta 5,000, `Indexed` hasta 30,000 y `DatabaseBacked` en adelante):
+
+```json
+{
+    "Description": "Catálogo de segmentos de productos y servicios (c_ClaveProdServ)",
+    "SearchStrategy": "InMemory",
+    "Preload": true,
+    "Items": [
+        { "Id": "10", "Description": "Material Vivo Vegetal y Animal, Accesorios y Suministros", "TypeId": "1" }
+    ]
+}
+```
+
+Ejemplo de ejecución:
+
+```shell
+sat-pys-scraper --normalized build/normalized
 ```
 
 ### Tipos de datos

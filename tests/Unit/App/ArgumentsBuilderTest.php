@@ -59,6 +59,20 @@ final class ArgumentsBuilderTest extends TestCase
         $this->assertFalse($result->quiet);
     }
 
+    #[TestWith(['--normalized'])]
+    #[TestWith(['-n'])]
+    public function testNormalizedOutputToDirectory(string $normalized): void
+    {
+        $outputDirectory = '/tmp/normalized';
+        $arguments = [$normalized, $outputDirectory];
+        $builder = new ArgumentsBuilder();
+
+        $result = $builder->build(...$arguments);
+
+        $this->assertSame($outputDirectory, $result->normalized);
+        $this->assertFalse($result->quiet);
+    }
+
     #[TestWith(['--quiet'])]
     #[TestWith(['-q'])]
     public function testQuiet(string $quiet): void
@@ -88,6 +102,7 @@ final class ArgumentsBuilderTest extends TestCase
         $arguments = [
             '--xml', 'result.xml',
             '--json', 'result.json',
+            '--normalized', 'normalized',
             '--sort', 'name',
             '--tries', '5',
             '--quiet',
@@ -99,6 +114,7 @@ final class ArgumentsBuilderTest extends TestCase
 
         $this->assertSame('result.xml', $result->xml);
         $this->assertSame('result.json', $result->json);
+        $this->assertSame('normalized', $result->normalized);
         $this->assertSame('name', $result->sort);
         $this->assertSame(5, $result->tries);
         $this->assertTrue($result->quiet);
@@ -114,6 +130,7 @@ final class ArgumentsBuilderTest extends TestCase
 
         $this->assertSame('output', $result->xml);
         $this->assertSame('', $result->json);
+        $this->assertSame('', $result->normalized);
         $this->assertSame('key', $result->sort);
         $this->assertSame(1, $result->tries);
         $this->assertFalse($result->quiet);
@@ -126,7 +143,7 @@ final class ArgumentsBuilderTest extends TestCase
         $builder = new ArgumentsBuilder();
 
         $this->expectException(ArgumentException::class);
-        $this->expectExceptionMessage('Did not specify --xml or --json arguments');
+        $this->expectExceptionMessage('Did not specify --xml, --json or --normalized arguments');
         $builder->build(...$arguments);
     }
 
@@ -176,13 +193,14 @@ final class ArgumentsBuilderTest extends TestCase
 
     #[TestWith(['--xml'])]
     #[TestWith(['--json'])]
+    #[TestWith(['--normalized'])]
     public function testWithoutOutput(string $format): void
     {
         $arguments = [$format, ''];
         $builder = new ArgumentsBuilder();
 
         $this->expectException(ArgumentException::class);
-        $this->expectExceptionMessage('Did not specify --xml or --json arguments');
+        $this->expectExceptionMessage('Did not specify --xml, --json or --normalized arguments');
         $builder->build(...$arguments);
     }
 }

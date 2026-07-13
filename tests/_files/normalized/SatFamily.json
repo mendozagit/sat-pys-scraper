@@ -1,0 +1,15 @@
+{
+    "Description": "Catálogo de familias de productos y servicios (c_ClaveProdServ)",
+    "SearchStrategy": "InMemory",
+    "Preload": true,
+    "Items": [
+        { "Id": "2711", "Description": "Herramientas de mano", "SegmentId": "27" },
+        { "Id": "2712", "Description": "Maquinaria y equipo hidráulico", "SegmentId": "27" },
+        { "Id": "3211", "Description": "Dispositivo semiconductor discreto", "SegmentId": "32" },
+        { "Id": "3212", "Description": "Componentes pasivos discretos", "SegmentId": "32" },
+        { "Id": "8512", "Description": "Práctica médica", "SegmentId": "85" },
+        { "Id": "8513", "Description": "Ciencia médica, investigación y experimentación", "SegmentId": "85" },
+        { "Id": "9110", "Description": "Aspecto personal", "SegmentId": "91" },
+        { "Id": "9111", "Description": "Asistencia doméstica y personal", "SegmentId": "91" }
+    ]
+}

@@ -9,6 +9,7 @@ use PhpCfdi\SatPysScraper\Data\Types;
 use PhpCfdi\SatPysScraper\Exceptions\HttpException;
 use PhpCfdi\SatPysScraper\Exceptions\HttpServerException;
 use PhpCfdi\SatPysScraper\Generator;
+use PhpCfdi\SatPysScraper\NormalizedExporter;
 use PhpCfdi\SatPysScraper\NullGeneratorTracker;
 use PhpCfdi\SatPysScraper\Scraper;
 use PhpCfdi\SatPysScraper\ScraperInterface;
@@ -24,7 +25,8 @@ final readonly class SatPysScraper
 
             Sintaxis:
                 $command help|-h|--help
-                $command [--quiet|-q] [--debug|-d] [--json|-j JSON_FILE] [--xml|-x XML_FILE] [--tries|-t TRIES]
+                $command [--quiet|-q] [--debug|-d] [--json|-j JSON_FILE] [--xml|-x XML_FILE]
+                         [--normalized|-n DIRECTORY] [--tries|-t TRIES]
 
             Argumentos:
                 --xml|-x XML_FILE
@@ -33,6 +35,9 @@ final readonly class SatPysScraper
                 --json|-j JSON_FILE
                     Establece el nombre de archivo, o "-" para la salida estándar, donde se envían
                     los datos generados en formato JSON.
+                --normalized|-n DIRECTORY
+                    Establece el directorio donde se escriben los archivos normalizados (tablas referenciales)
+                    SatType.json, SatSegment.json, SatFamily.json y SatClass.json.
                 --sort|-s SORT
                     Establece el orden de elementos, default: key, se puede usar "key" o "name".
                 --tries|-t TRIES
@@ -44,7 +49,7 @@ final readonly class SatPysScraper
                     Modo de operación silencioso.
 
             Notas:
-                Debe especificar al menos un argumento "--xml" o "--json", o ambos.
+                Debe especificar al menos un argumento "--xml", "--json" o "--normalized".
                 No se puede especificar "-" como salida de "--xml" y "--json" al mismo tiempo.
                 Al especificar la salida "-" se activa automáticamente el modo silencioso.
 
@@ -75,7 +80,7 @@ final readonly class SatPysScraper
             do {
                 $try = $try + 1;
                 try {
-                    $app->execute($arguments, $scraper);
+                    $app->execute($arguments, $scraper, $stdErrFile);
                     $serverException = null;
                     break;
                 } catch (HttpServerException $exception) {
@@ -98,7 +103,7 @@ final readonly class SatPysScraper
     }
 
     /** @throws HttpServerException|HttpException */
-    private function execute(Arguments $arguments, ScraperInterface|null $scraper): void
+    private function execute(Arguments $arguments, ScraperInterface|null $scraper, string $stdErrFile): void
     {
         $tracker = ($arguments->quiet) ? new NullGeneratorTracker() : new PrinterGeneratorTracker();
         $scraper ??= new Scraper(new Client());
@@ -116,6 +121,9 @@ final readonly class SatPysScraper
         if ('' !== $arguments->json) {
             $this->toJson($arguments->json, $types);
         }
+        if ('' !== $arguments->normalized) {
+            $this->toNormalized($arguments->normalized, $types, $stdErrFile);
+        }
     }
 
     public function toXml(string $output, Types $types): void
@@ -127,5 +135,13 @@ final readonly class SatPysScraper
     public function toJson(string $output, Types $types): void
     {
         file_put_contents($output, (string) json_encode($types, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    }
+
+    public function toNormalized(string $directory, Types $types, string $stdErrFile = 'php://stderr'): void
+    {
+        $warnings = (new NormalizedExporter())->exportToDirectory($types, $directory);
+        foreach ($warnings as $warning) {
+            file_put_contents($stdErrFile, 'WARNING: ' . $warning . PHP_EOL, FILE_APPEND);
+        }
     }
 }

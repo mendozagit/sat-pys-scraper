@@ -13,6 +13,7 @@ final readonly class Arguments
         public int $tries,
         public bool $quiet,
         public bool $debug,
+        public string $normalized = '',
     ) {
     }
 }

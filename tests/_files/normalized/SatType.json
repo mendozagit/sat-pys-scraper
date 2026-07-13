@@ -1,0 +1,9 @@
+{
+    "Description": "Catálogo de tipos de productos y servicios (c_ClaveProdServ)",
+    "SearchStrategy": "InMemory",
+    "Preload": true,
+    "Items": [
+        { "Id": "1", "Description": "Productos" },
+        { "Id": "2", "Description": "Servicios" }
+    ]
+}

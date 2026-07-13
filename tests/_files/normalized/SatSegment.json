@@ -1,0 +1,11 @@
+{
+    "Description": "Catálogo de segmentos de productos y servicios (c_ClaveProdServ)",
+    "SearchStrategy": "InMemory",
+    "Preload": true,
+    "Items": [
+        { "Id": "27", "Description": "Herramientas y Maquinaria General", "TypeId": "1" },
+        { "Id": "32", "Description": "Componentes y Suministros Electrónicos", "TypeId": "1" },
+        { "Id": "85", "Description": "Servicios de salud", "TypeId": "2" },
+        { "Id": "91", "Description": "Servicios Personales y Domésticos", "TypeId": "2" }
+    ]
+}

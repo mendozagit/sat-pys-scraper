@@ -11,6 +11,15 @@ versión, aunque sí su incorporación en la rama principal de trabajo. Generalm
 
 ## Listado de cambios
 
+### Cambios no liberados
+
+- Se agrega la exportación normalizada (tablas referenciales) con el argumento `--normalized|-n DIRECTORY`.
+  Genera los archivos `SatType.json`, `SatSegment.json`, `SatFamily.json` y `SatClass.json`, donde cada
+  elemento contiene el identificador de su elemento padre (`TypeId`, `SegmentId` y `FamilyId`).
+- Se agrega la clase `NormalizedExporter` y el enum `SearchStrategy`.
+- El mensaje de error cuando no se especifica una salida cambia a
+  `Did not specify --xml, --json or --normalized arguments`.
+
 ### Versión 5.0.0 2025-11-13
 
 Se elimina la compatibilidad con PHP 8.2. Se mantiene PHP 8.3 y PHP 8.4.

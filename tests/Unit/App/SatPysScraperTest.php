@@ -49,6 +49,27 @@ final class SatPysScraperTest extends TestCase
         unlink($jsonOutputFile);
     }
 
+    public function testRunWithNormalized(): void
+    {
+        $scraper = $this->createFakeScraper();
+        $outputDirectory = $this->createTemporaryDirectory();
+        $fileNames = ['SatType.json', 'SatSegment.json', 'SatFamily.json', 'SatClass.json'];
+
+        $argv = ['command', '--normalized', $outputDirectory, '--quiet'];
+        $script = new SatPysScraper();
+
+        $this->expectOutputString('');
+        $result = $script->run(argv: $argv, scraper: $scraper);
+
+        $this->assertSame(0, $result);
+        foreach ($fileNames as $fileName) {
+            $expectedFile = __DIR__ . '/../../_files/normalized/' . $fileName;
+            $this->assertJsonFileEqualsJsonFile($expectedFile, $outputDirectory . DIRECTORY_SEPARATOR . $fileName);
+        }
+
+        $this->removeDirectory($outputDirectory);
+    }
+
     public function testRunWithError(): void
     {
         $argv = ['command', '--debug'];
@@ -61,7 +82,7 @@ final class SatPysScraperTest extends TestCase
 
         $this->assertSame(1, $result);
         $this->assertStringContainsString(
-            'ERROR: Did not specify --xml or --json arguments',
+            'ERROR: Did not specify --xml, --json or --normalized arguments',
             $stdError,
             'Expected error was not raised',
         );

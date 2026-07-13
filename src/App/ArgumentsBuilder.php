@@ -10,6 +10,8 @@ final class ArgumentsBuilder
 
     private string $json = '';
 
+    private string $normalized = '';
+
     private string $sort = 'key';
 
     private int $tries = 1;
@@ -27,6 +29,8 @@ final class ArgumentsBuilder
             match (true) {
                 in_array($argument, ['--xml', '-x'], true) => $this->setXml((string) array_shift($arguments)),
                 in_array($argument, ['--json', '-j'], true) => $this->setJson((string) array_shift($arguments)),
+                in_array($argument, ['--normalized', '-n'], true)
+                    => $this->setNormalized((string) array_shift($arguments)),
                 in_array($argument, ['--sort', '-s'], true) => $this->setSort((string) array_shift($arguments)),
                 in_array($argument, ['--tries', '-t'], true) => $this->setTries((string) array_shift($arguments)),
                 in_array($argument, ['--quiet', '-q'], true) => $this->setQuiet(),
@@ -35,8 +39,8 @@ final class ArgumentsBuilder
             };
         }
 
-        if ('' === $this->xml && '' === $this->json) {
-            throw new ArgumentException('Did not specify --xml or --json arguments');
+        if ('' === $this->xml && '' === $this->json && '' === $this->normalized) {
+            throw new ArgumentException('Did not specify --xml, --json or --normalized arguments');
         }
         if ('-' === $this->xml && '-' === $this->json) {
             throw new ArgumentException('Cannot send --xml and --json result to standard output at the same time');
@@ -49,6 +53,7 @@ final class ArgumentsBuilder
             tries: $this->tries,
             quiet: $this->quiet,
             debug: $this->debug,
+            normalized: $this->normalized,
         );
     }
 
@@ -66,6 +71,11 @@ final class ArgumentsBuilder
         if ('-' === $argument) {
             $this->quiet = true;
         }
+    }
+
+    private function setNormalized(string $argument): void
+    {
+        $this->normalized = $argument;
     }
 
     /** @throws ArgumentException */

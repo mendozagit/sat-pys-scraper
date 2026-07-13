@@ -89,4 +89,22 @@ abstract class TestCase extends \PhpCfdi\SatPysScraper\Tests\TestCase
         }
         return $temporaryFile;
     }
+
+    public function createTemporaryDirectory(): string
+    {
+        $temporaryDirectory = $this->createTemporaryFilename();
+        unlink($temporaryDirectory);
+        if (! mkdir($temporaryDirectory)) {
+            throw new LogicException('Unable to create a temporary directory');
+        }
+        return $temporaryDirectory;
+    }
+
+    public function removeDirectory(string $directory): void
+    {
+        foreach (glob($directory . DIRECTORY_SEPARATOR . '*') ?: [] as $entry) {
+            is_dir($entry) ? $this->removeDirectory($entry) : unlink($entry);
+        }
+        rmdir($directory);
+    }
 }
