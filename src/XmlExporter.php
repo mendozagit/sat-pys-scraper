@@ -17,7 +17,7 @@ final class XmlExporter
 
     public function exportAsDocument(Data\Types $types): DOMDocument
     {
-        $document = new DOMDocument();
+        $document = new DOMDocument('1.0', 'UTF-8');
         $document->formatOutput = true;
         /** @noinspection PhpUnhandledExceptionInspection */
         $root = $document->createElement('pys');
