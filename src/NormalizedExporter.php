@@ -70,8 +70,10 @@ final class NormalizedExporter
                         'SegmentId' => (string) $segment->id,
                     ];
                     foreach ($family as $class) {
+                        // El par de producto se rellena con '00' para formar la clave de 8 dígitos
+                        // registrable como c_ClaveProdServ, apuntando a la clase completa.
                         $classItems[] = [
-                            'Id' => (string) $class->id,
+                            'Id' => (string) $class->id . '00',
                             'Description' => $class->name,
                             'FamilyId' => (string) $family->id,
                         ];

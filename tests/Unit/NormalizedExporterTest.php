@@ -66,6 +66,29 @@ final class NormalizedExporterTest extends TestCase
         $this->removeDirectory($directory);
     }
 
+    public function testClassIdentifierIsClassCodeWithProductPairFilledWithZeros(): void
+    {
+        $types = new Types();
+        $type = $types->addType(1, 'Productos');
+        $segment = $type->addSegment(50, 'Alimentos, Bebidas y Tabaco');
+        $family = $segment->addFamily(5011, 'Productos de carne y aves de corral');
+        $family->addClass(501115, 'Carne y aves de corral mínimamente procesadas');
+        $directory = $this->createTemporaryDirectory();
+
+        $exporter = new NormalizedExporter();
+        $exporter->exportToDirectory($types, $directory);
+
+        /** @var array{Items: list<array{Id: string, FamilyId: string}>} $contents */
+        $contents = json_decode(
+            (string) file_get_contents($directory . DIRECTORY_SEPARATOR . 'SatClass.json'),
+            associative: true,
+        );
+        $this->assertSame('50111500', $contents['Items'][0]['Id']);
+        $this->assertSame('5011', $contents['Items'][0]['FamilyId']);
+
+        $this->removeDirectory($directory);
+    }
+
     public function testDuplicatedItemsAreExcludedWithWarning(): void
     {
         $types = new Types();

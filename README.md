@@ -144,6 +144,11 @@ en 4 tablas relacionales en formato JSON, donde cada elemento contiene el identi
 - `SatFamily.json`: `{ "Id", "Description", "SegmentId" }`
 - `SatClass.json`: `{ "Id", "Description", "FamilyId" }`
 
+En `SatClass.json` el identificador es la clave de 8 dígitos registrable como `c_ClaveProdServ`:
+se forma con el código de clase de 6 dígitos rellenando el par de producto con `00`
+(por ejemplo, la clase `501115` se exporta con `Id` igual a `50111500`), indicando que la clave
+apunta a la clase completa y no a un artículo concreto.
+
 Cada archivo contiene un envoltorio con la descripción del catálogo y la estrategia de búsqueda sugerida
 según la cantidad de elementos (`InMemory` hasta 5,000, `Indexed` hasta 30,000 y `DatabaseBacked` en adelante):
 

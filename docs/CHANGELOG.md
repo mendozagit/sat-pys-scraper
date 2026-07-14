@@ -16,6 +16,8 @@ versión, aunque sí su incorporación en la rama principal de trabajo. Generalm
 - Se agrega la exportación normalizada (tablas referenciales) con el argumento `--normalized|-n DIRECTORY`.
   Genera los archivos `SatType.json`, `SatSegment.json`, `SatFamily.json` y `SatClass.json`, donde cada
   elemento contiene el identificador de su elemento padre (`TypeId`, `SegmentId` y `FamilyId`).
+  En `SatClass.json` el identificador es la clave de 8 dígitos (`c_ClaveProdServ`): el código de clase
+  de 6 dígitos con el par de producto relleno con `00`, por ejemplo `501115` se exporta como `50111500`.
 - Se agrega la clase `NormalizedExporter` y el enum `SearchStrategy`.
 - El mensaje de error cuando no se especifica una salida cambia a
   `Did not specify --xml, --json or --normalized arguments`.
